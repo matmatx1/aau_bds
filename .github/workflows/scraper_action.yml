@@ -2,26 +2,26 @@ name: Scrape Data and Push Results
 
 # Controls when the workflow will run
 on:
-  # Allows you to run this workflow manually from the Actions tab
+
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs
+
 jobs:
   scrape-and-push:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
 
     # Steps represent a sequence of tasks that will be executed
     steps:
-      # Checks out your repository under $GITHUB_WORKSPACE
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Sets up Python environment
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x'  # Specify your Python version (e.g., '3.9')
+          python-version: '3.9'
 
       # Installs dependencies from requirements.txt
       - name: Install dependencies
@@ -29,7 +29,6 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f m4/new_scraper_app/requirements.txt ]; then pip install -r m4/new_scraper_app/requirements.txt; fi
 
-      # Runs the scraper
       - name: Run scraper
         run: |
           python m4/new_scraper_app/news_scraper.py
